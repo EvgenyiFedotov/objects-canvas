@@ -4,8 +4,13 @@ const path = require('path');
 
 const defaultParams = {
   mode: 'development', // production || development
-  path: 'dist',
 };
+
+const getConfigOutput = (pathValue) => ({
+  path: path.resolve(__dirname, pathValue),
+  chunkFilename: '[name].js',
+  filename: '[name].js',
+});
 
 const getConfig = (params = {}) => {
   const buildParams = {
@@ -14,11 +19,6 @@ const getConfig = (params = {}) => {
   };
 
   return {
-    output: {
-      path: path.resolve(__dirname, buildParams.path),
-      chunkFilename: '[name].js',
-      filename: '[name].js',
-    },
     resolve: {
       extensions: ['.js'],
       modules: ['node_modules'],
@@ -46,28 +46,29 @@ const getConfig = (params = {}) => {
         sourceMap: true,
       })],
     },
-    mode: buildParams.mode,
-    ...buildParams.config,
+    ...buildParams,
+    ...params,
   };
 };
 
 module.exports = [
   getConfig({
-    config: {
-      entry: {
-        main: './app',
-      },
-      plugins: [
-        new CopyPlugin([
-          { from: 'public', to: '.' },
-        ]),
-      ],
-      devServer: {
-        contentBase: path.join(__dirname, 'dist'),
-        writeToDisk: true,
-        port: 5000,
-      },
+    entry: { main: './app', },
+    output: getConfigOutput('dist'),
+    plugins: [
+      new CopyPlugin([
+        { from: 'public', to: '.' },
+      ]),
+    ],
+    devServer: {
+      contentBase: path.join(__dirname, 'dist'),
+      writeToDisk: true,
+      port: 5000,
     },
   }),
-  getConfig({ path: 'lib' }),
+
+  getConfig({
+    entry: { index: './src', },
+    output: getConfigOutput('lib'),
+  }),
 ];
