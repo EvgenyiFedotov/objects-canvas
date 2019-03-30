@@ -7,8 +7,7 @@
     "build:prod": "webpack --prod",
     "build-watch": "webpack --watch",
     "start": "webpack-dev-server",
-    "start:prod": "webpack-dev-server --prod",
-    "flow": "flow"
+    "start:prod": "webpack-dev-server --prod"
   },
   "repository": {
     "type": "git",
@@ -21,10 +20,14 @@
   },
   "homepage": "https://github.com/EvgenyiFedotov/test-chat#readme",
   "devDependencies": {
+    "@babel/cli": "^7.2.3",
     "@babel/core": "^7.3.4",
     "@babel/plugin-proposal-class-properties": "^7.3.4",
     "@babel/preset-env": "^7.3.4",
-    "@babel/preset-flow": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/preset-typescript": "^7.3.3",
+    "@types/react": "^16.8.10",
+    "@types/react-dom": "^16.8.3",
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.5",
     "copy-webpack-plugin": "^5.0.0",
@@ -33,12 +36,14 @@
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-flowtype": "^3.4.2",
     "eslint-plugin-import": "^2.16.0",
-    "flow": "^0.2.3",
-    "flow-bin": "^0.94.0",
     "style-loader": "^0.23.1",
     "uglifyjs-webpack-plugin": "^2.1.2",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.2.3",
     "webpack-dev-server": "^3.2.1"
+  },
+  "dependencies": {
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
   }
 }

@@ -24,19 +24,19 @@ module.exports = {
   }),
 
   resolve: () => ({
-    extensions: ['.js'],
+    extensions: ['.js', '.ts', '.tsx', '.jsx'],
     modules: ['node_modules'],
   }),
 
   module: () => ({
     rules: [{
-      test: /\.(js)$/,
+      test: /\.(ts|js)x?$/,
       exclude: /node_modules/i,
       use: {
         loader: 'babel-loader',
         options: {
           cacheDirectory: true,
-          presets: ['@babel/preset-env', '@babel/flow'],
+          presets: ['@babel/env', '@babel/typescript', '@babel/react'],
           plugins: ['@babel/plugin-proposal-class-properties'],
         },
       },
