@@ -1,63 +1,22 @@
 const CopyPlugin = require('copy-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const path = require('path');
+const webpack = require('./webpack');
 
-const defaultParams = {
-  mode: 'development', // production || development
-};
+var args = process.argv.slice(2);
 
-const getConfigOutput = (pathValue) => ({
-  path: path.resolve(__dirname, pathValue),
-  chunkFilename: '[name].js',
-  filename: '[name].js',
-});
+console.log(args);
 
-const getConfig = (params = {}) => {
-  const buildParams = {
-    ...defaultParams,
-    ...params,
-  };
-
-  return {
-    resolve: {
-      extensions: ['.js'],
-      modules: ['node_modules'],
-    },
-    module: {
-      rules: [{
-        test: /\.(js)$/,
-        exclude: /node_modules/i,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            cacheDirectory: true,
-            presets: ['@babel/preset-env', '@babel/flow'],
-            plugins: ['@babel/plugin-proposal-class-properties'],
-          },
-        },
-      }, {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
-      }],
-    },
-    optimization: {
-      minimizer: [new UglifyJsPlugin({
-        cache: true,
-        sourceMap: true,
-      })],
-    },
-    ...buildParams,
-    ...params,
-  };
-};
-
-module.exports = [
-  getConfig({
-    entry: { main: './app', },
-    output: getConfigOutput('dist'),
+module.exports = webpack.buildConfig([
+  ['output', webpack.output],
+  ['resolve', webpack.resolve],
+  ['module', webpack.module],
+  {
+    mode: args.indexOf('--prod') === -1
+      ? 'development'
+      : 'production',
     plugins: [
       new CopyPlugin([
-        { from: 'public', to: '.' },
+        { from: './public', to: '.' },
       ]),
     ],
     devServer: {
@@ -65,10 +24,5 @@ module.exports = [
       writeToDisk: true,
       port: 5000,
     },
-  }),
-
-  getConfig({
-    entry: { index: './src', },
-    output: getConfigOutput('lib'),
-  }),
-];
+  },
+]);

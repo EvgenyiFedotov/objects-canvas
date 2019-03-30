@@ -1,24 +1,25 @@
 {
-  "name": "objects-canvas",
+  "name": "test-chat",
   "version": "0.0.1",
   "description": "",
-  "main": "lib/index.js",
   "scripts": {
     "build": "webpack",
+    "build:prod": "webpack --prod",
     "build-watch": "webpack --watch",
-    "start:dev": "webpack-dev-server",
+    "start": "webpack-dev-server",
+    "start:prod": "webpack-dev-server --prod",
     "flow": "flow"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/EvgenyiFedotov/objects-canvas.git"
+    "url": "git+https://github.com/EvgenyiFedotov/test-chat.git"
   },
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/EvgenyiFedotov/objects-canvas/issues"
+    "url": "https://github.com/EvgenyiFedotov/test-chat/issues"
   },
-  "homepage": "https://github.com/EvgenyiFedotov/objects-canvas#readme",
+  "homepage": "https://github.com/EvgenyiFedotov/test-chat#readme",
   "devDependencies": {
     "@babel/core": "^7.3.4",
     "@babel/plugin-proposal-class-properties": "^7.3.4",
