@@ -4,4 +4,22 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+}
+
+.page-auth__form {
+  width: calc(var(--space) * 26);
+}
+
+.page-auth__input {
+  width: 100%;
+}
+
+.page-auth__button {
+  width: 100%;
+}
+
+.page-auth__error {
+  color: var(--err-color);
+  text-align: center;
 }

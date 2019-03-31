@@ -36,8 +36,17 @@ module.exports = {
         loader: 'babel-loader',
         options: {
           cacheDirectory: true,
-          presets: ['@babel/env', '@babel/typescript', '@babel/react'],
-          plugins: ['@babel/plugin-proposal-class-properties'],
+          presets: [
+            ['@babel/env', {
+              modules: false,
+            }],
+            '@babel/typescript',
+            '@babel/react',
+          ],
+          plugins: [
+            '@babel/plugin-proposal-class-properties',
+            '@babel/plugin-transform-runtime',
+          ],
         },
       },
     }, {

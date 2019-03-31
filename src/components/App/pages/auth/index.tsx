@@ -1,6 +1,17 @@
 import React, { useState, SyntheticEvent } from 'react';
-import { generateKeyByPassword, encrypt, decrypt } from '../../../../core/crypto';
+import {
+  generateKeyByPassword,
+  encrypt,
+  decrypt
+} from '../../../../core/crypto';
+import { openDB, methodsTable } from '../../../../core/idb';
 import './styles.css';
+
+interface OnClickParams {
+  login: string,
+  password: string,
+  setError: Function,
+};
 
 const onChange = (set: Function) => (e: SyntheticEvent) => {
   const { target } = e;
@@ -9,35 +20,58 @@ const onChange = (set: Function) => (e: SyntheticEvent) => {
   set(value);
 };
 
-const onClick = password => () => {
-  const key = generateKeyByPassword(password);
+const onClick = (params: OnClickParams) => () => {
+  const { login, password, setError } = params;
+  const loginKey = generateKeyByPassword(login);
+  const passwordKey = generateKeyByPassword(password);
+  const users = methodsTable(openDB(), 'users');
 
-  const encryptData = encrypt({ test: '123', test2: 3333 }, key);
-
-  console.log('@onClick', key, encryptData);
-
-  console.log(decrypt(encryptData, key));
+  users.get(loginKey).then((result) => {
+    if (result === undefined) {
+      users.set(loginKey, passwordKey);
+    } else if (result === passwordKey) {
+      console.log(result);
+      setError('');
+    } else {
+      setError('Not correct password!');
+    }
+  });
 };
 
 export default () => {
+  const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
   return (
     <div className="page-auth">
-      <input
-        placeholder="Login"
-      />
+      <div className="page-auth__form">
+        <input
+          className="page-auth__input"
+          placeholder="Login"
+          value={login}
+          onChange={onChange(setLogin)}
+        />
 
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={onChange(setPassword)}
-      />
+        <input
+          className="page-auth__input"
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={onChange(setPassword)}
+        />
 
-      <button onClick={onClick(password)}>
-        Enter
-      </button>
+        <button
+          className="page-auth__button"
+          onClick={onClick({ login, password, setError })}
+        >
+          Enter
+        </button>
+
+        <div className="page-auth__error">
+          {error}
+        </div>
+      </div>
     </div>
   );
 };

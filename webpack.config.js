@@ -2,9 +2,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 const path = require('path');
 const webpack = require('./webpack');
 
-var args = process.argv.slice(2);
-
-console.log(args);
+const args = process.argv.slice(2);
 
 module.exports = webpack.buildConfig([
   ['output', webpack.output],
