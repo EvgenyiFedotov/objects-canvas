@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Components from './components';
+import App from './components/App';
+import './styles.css';
 
 document.addEventListener('DOMContentLoaded', () => ReactDOM.render(
-  <Components />,
+  <App />,
   document.getElementById('root'),
 ));

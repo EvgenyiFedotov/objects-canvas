@@ -43,7 +43,12 @@
     "webpack-dev-server": "^3.2.1"
   },
   "dependencies": {
+    "install": "^0.12.2",
+    "npm": "^6.9.0",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.8.6",
+    "react-router-dom": "^5.0.0",
+    "tweetnacl": "^1.0.1",
+    "tweetnacl-util": "^0.15.0"
   }
 }
