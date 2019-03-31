@@ -8,12 +8,12 @@ module.exports = webpack.buildConfig([
   ['resolve', webpack.resolve],
   ['module', webpack.module],
   {
-    entry: { main: './src/server' },
+    entry: { index: './src/server' },
     mode: webpack.mode(),
-    devServer: {
-      contentBase: path.join(__dirname, '../dist/server'),
-      writeToDisk: true,
-      port: 5001,
+    target: 'node',
+    externals: ['uws'],
+    stats: {
+      warnings: false,
     },
   },
 ]);
