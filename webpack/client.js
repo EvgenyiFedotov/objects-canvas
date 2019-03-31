@@ -1,24 +1,23 @@
 const CopyPlugin = require('copy-webpack-plugin');
 const path = require('path');
-const webpack = require('./webpack');
-
-const args = process.argv.slice(2);
+const webpack = require('.');
 
 module.exports = webpack.buildConfig([
-  ['output', webpack.output],
+  ['output', webpack.outputByPath({
+    path: path.join(__dirname, '../dist/client'),
+  })],
   ['resolve', webpack.resolve],
   ['module', webpack.module],
   {
-    mode: args.indexOf('--prod') === -1
-      ? 'development'
-      : 'production',
+    entry: { main: './src/client' },
+    mode: webpack.mode(),
     plugins: [
       new CopyPlugin([
         { from: './public', to: '.' },
       ]),
     ],
     devServer: {
-      contentBase: path.join(__dirname, 'dist'),
+      contentBase: path.join(__dirname, '../dist/client'),
       writeToDisk: true,
       port: 5000,
     },

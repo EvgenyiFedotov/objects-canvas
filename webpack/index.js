@@ -1,5 +1,7 @@
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
+const args = process.argv.slice(2);
+
 const checkConfig = (config, params = {}) => (
   config instanceof Function
     ? config(params)
@@ -71,6 +73,12 @@ module.exports = {
           : checkConfig(config, params)
       ),
     }), {})
+  ),
+
+  mode: () => (
+    args.indexOf('--prod') === -1
+      ? 'development'
+      : 'production'
   ),
 
   checkConfig,
