@@ -4,6 +4,7 @@ import {
   encrypt,
   decrypt
 } from '../../../../core/crypto';
+import axiosCreate from '../../../../core/axios-create';
 import { openDB, methodsTable } from '../../../../core/idb';
 import './styles.css';
 
@@ -30,7 +31,11 @@ const onClick = (params: OnClickParams) => () => {
     if (result === undefined) {
       users.set(loginKey, passwordKey);
     } else if (result === passwordKey) {
-      console.log(result);
+
+      axiosCreate().get('/api/test').then((result) => {
+        console.log(result);
+      });
+
       setError('');
     } else {
       setError('Not correct password!');
