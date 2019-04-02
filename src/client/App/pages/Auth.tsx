@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Redirect } from 'react-router';
+import PageContent from './components/PageContent';
+import Form from './components/Form';
 import { generateKeyByPassword } from './common/crypto';
 import axiosCreate from './common/axios-create';
 import { openDB, methodsTable } from './common/idb';
@@ -13,32 +14,27 @@ const mehtods = {
   axiosCreate,
 };
 
-export default () => {
+interface Props {
+  userState: [any, Function];
+};
+
+export default (props: Props) => {
+  const { userState } = props;
+  const [, setUser] = userState;
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [isAuth, setIsAuth] = useState(false);
-
-  if (isAuth) {
-    return (
-      <Redirect to={{
-        pathname: '/chats',
-      }} />
-    );
-  }
 
   return (
-    <div className="page-auth">
-      <div className="page-auth__form">
+    <PageContent>
+      <Form>
         <input
-          className="page-auth__input"
           placeholder="Login"
           value={login}
           onChange={onChange(setLogin)}
         />
 
         <input
-          className="page-auth__input"
           type="password"
           placeholder="Password"
           value={password}
@@ -46,13 +42,11 @@ export default () => {
         />
 
         <button
-          className="page-auth__button"
-          onClick={onClick(mehtods)({
-            login,
-            password,
+          onClick={onClick({
+            ...mehtods,
+            setUser,
             setError,
-            setIsAuth,
-          })}
+          })({ login, password })}
         >
           Enter
         </button>
@@ -60,7 +54,7 @@ export default () => {
         <div className="page-auth__error">
           {error}
         </div>
-      </div>
-    </div>
+      </Form>
+    </PageContent>
   );
 };

@@ -5,13 +5,13 @@ export interface OnClickMethods {
   methodsTable: Function;
   openDB: Function;
   axiosCreate: Function;
+  setError: Function;
+  setUser: Function;
 };
 
 export interface OnClickParams {
   login: string;
   password: string;
-  setError: Function;
-  setIsAuth: Function;
 };
 
 export const onChange = (set: Function) =>
@@ -22,24 +22,21 @@ export const onChange = (set: Function) =>
     set(value);
   };
 
-export const onClick = (methods: OnClickMethods) =>
-  (params: OnClickParams) => () => {
+const authUser = (methods: OnClickMethods) =>
+  (params: OnClickParams) => {
     const {
       generateKeyByPassword,
       methodsTable,
       openDB,
       axiosCreate,
-    } = methods;
-    const {
-      login,
-      password,
       setError,
-      setIsAuth,
-    } = params;
+      setUser,
+    } = methods;
+    const { login, password } = params;
     const passwordKey = generateKeyByPassword(password);
     const users = methodsTable(openDB(), 'users');
 
-    users.get(login).then((result) => {
+    users.get(login).then((result: string) => {
       const resInUndef = result === undefined;
 
       if (resInUndef || result === passwordKey) {
@@ -47,14 +44,23 @@ export const onClick = (methods: OnClickMethods) =>
           users.set(login, passwordKey);
         }
 
-        axiosCreate().get('/api/test').then((result) => {
+        axiosCreate().get('/api/test').then((result: any) => {
           console.log(result);
         });
 
         setError('');
-        setIsAuth(true);
+        setUser(login);
       } else {
         setError('Not correct password!');
       }
     });
+  };
+
+export const onClick = (methods: OnClickMethods) =>
+  (params: OnClickParams) => () => {
+    const { login, password } = params;
+
+    if (login && password) {
+      authUser(methods)(params);
+    }
   };
