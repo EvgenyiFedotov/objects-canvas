@@ -11,6 +11,7 @@ export interface OnClickParams {
   login: string;
   password: string;
   setError: Function;
+  setIsAuth: Function;
 };
 
 export const onChange = (set: Function) =>
@@ -29,7 +30,12 @@ export const onClick = (methods: OnClickMethods) =>
       openDB,
       axiosCreate,
     } = methods;
-    const { login, password, setError } = params;
+    const {
+      login,
+      password,
+      setError,
+      setIsAuth,
+    } = params;
     const passwordKey = generateKeyByPassword(password);
     const users = methodsTable(openDB(), 'users');
 
@@ -46,6 +52,7 @@ export const onClick = (methods: OnClickMethods) =>
         });
 
         setError('');
+        setIsAuth(true);
       } else {
         setError('Not correct password!');
       }

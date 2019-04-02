@@ -5,13 +5,10 @@
   "scripts": {
     "build:client": "webpack --config ./webpack/client.js",
     "build:client:prod": "webpack --prod",
-
     "start:client": "webpack-dev-server --config ./webpack/client.js",
     "start:client:prod": "webpack-dev-server --prod",
-
     "build:server": "webpack --config ./webpack/server.js",
     "build:server:watch": "webpack --config ./webpack/server.js --watch",
-
     "start:server": "node ./node_modules/nodemon/bin/nodemon.js ./dist/server/index.js"
   },
   "repository": {
@@ -36,6 +33,7 @@
     "@types/node": "^11.12.2",
     "@types/react": "^16.8.10",
     "@types/react-dom": "^16.8.3",
+    "@types/react-router": "^4.4.5",
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.5",
     "copy-webpack-plugin": "^5.0.0",
@@ -58,6 +56,7 @@
     "install": "^0.12.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-router": "^5.0.0",
     "react-router-dom": "^5.0.0",
     "tweetnacl": "^1.0.1",
     "tweetnacl-util": "^0.15.0"

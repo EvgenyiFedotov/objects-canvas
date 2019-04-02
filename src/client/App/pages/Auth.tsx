@@ -1,14 +1,31 @@
-import React, { useState, SyntheticEvent } from 'react';
+import React, { useState } from 'react';
+import { Redirect } from 'react-router';
 import { generateKeyByPassword } from './common/crypto';
 import axiosCreate from './common/axios-create';
 import { openDB, methodsTable } from './common/idb';
 import { onChange, onClick } from './auth/common';
 import './auth/styles.css';
 
+const mehtods = {
+  generateKeyByPassword,
+  methodsTable,
+  openDB,
+  axiosCreate,
+};
+
 export default () => {
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [isAuth, setIsAuth] = useState(false);
+
+  if (isAuth) {
+    return (
+      <Redirect to={{
+        pathname: '/chats',
+      }} />
+    );
+  }
 
   return (
     <div className="page-auth">
@@ -30,12 +47,12 @@ export default () => {
 
         <button
           className="page-auth__button"
-          onClick={onClick({
-            generateKeyByPassword,
-            methodsTable,
-            openDB,
-            axiosCreate,
-          })({ login, password, setError })}
+          onClick={onClick(mehtods)({
+            login,
+            password,
+            setError,
+            setIsAuth,
+          })}
         >
           Enter
         </button>
