@@ -1,6 +1,7 @@
 import React from 'react';
 
 export interface ListItem {
+  link: string;
   name: string;
 };
 
@@ -11,11 +12,11 @@ interface Props {
 export default (props: Props) => (
   <div>
     {props.children.reduce((result: Array<Object>, item, index) => {
-      const { name } = item;
+      const { link, name } = item;
 
       result.push(
         <div key={index}>
-          {name}
+          <a href="#">{link}</a> | {name}
         </div>
       );
 
@@ -23,3 +24,4 @@ export default (props: Props) => (
     }, [])}
   </div>
 );
+

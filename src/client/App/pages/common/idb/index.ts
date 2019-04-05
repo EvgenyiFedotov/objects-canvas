@@ -3,6 +3,7 @@ import { openDB as open } from 'idb';
 export const openDB = () => open('secret-chat', 1, {
   upgrade: (db) => {
     db.createObjectStore('users');
+    db.createObjectStore('chats');
   },
 });
 
@@ -23,3 +24,6 @@ export const methodsTable = (db: Promise<any>, nameTable: string) => ({
     return (await db).getAllKeys(nameTable);
   },
 });
+
+export const tableUsers = methodsTable(openDB(), 'users');
+export const tableChats = methodsTable(openDB(), 'chats');

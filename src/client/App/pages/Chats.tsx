@@ -4,10 +4,17 @@ import Form from './components/Form';
 import List from './chats/List';
 import ChatsForm from './chats/Form';
 import { onSubmit } from './chats/common';
+import { generateKey } from './common/crypto';
+import { tableChats } from './common/idb';
 
 interface Props {
   userState: [any, Function];
 };
+
+const onSubmitMethods = onSubmit({
+  generateKey,
+  tableChats,
+});
 
 export default (props: Props) => {
   const { userState } = props;
@@ -16,7 +23,9 @@ export default (props: Props) => {
   const [chats] = chatsState;
 
   return (
-    <PageContent>
+    <PageContent
+      justify="space-between"
+    >
       <div>
         Login: {user}
       </div>
@@ -26,7 +35,9 @@ export default (props: Props) => {
       </List>
 
       <Form>
-        <ChatsForm onSubmit={onSubmit(chatsState)} />
+        <ChatsForm
+          onSubmit={onSubmitMethods(chatsState)}
+        />
       </Form>
     </PageContent>
   );
