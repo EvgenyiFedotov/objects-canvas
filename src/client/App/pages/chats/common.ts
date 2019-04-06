@@ -1,4 +1,5 @@
 import { ListItem } from './List';
+import uuidv5 from 'uuid/v5';
 
 interface TableChats {
   get: Function;
@@ -27,7 +28,7 @@ export const onSubmit =
           const [user] = userState;
           const [chats, setChats] = chatsState;
           const [name, setName] = nameChatState;
-          const link = generateKey();
+          const link = uuidv5(generateKey(), uuidv5.URL);
           const chat = { link, name };
 
           tableChats.get(user).then((prevChats: Array<ListItem>) => {

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export interface ListItem {
   link: string;
@@ -16,7 +17,7 @@ export default (props: Props) => (
 
       result.push(
         <div key={index}>
-          <a href="#">{link}</a> | {name}
+          <Link to={`/chats/${link}`}>{link}</Link> | {name}
         </div>
       );
 
