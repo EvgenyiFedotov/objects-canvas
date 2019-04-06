@@ -25,9 +25,7 @@ export default (props: Props) => {
   useEffect(() => {
     getChats(userState)(tableChats).then((readChats) => {
       setChats(readChats);
-    });
-
-    console.log('@didMount');
+    })
   }, []);
 
   return (

@@ -4,6 +4,14 @@ import './styles.css';
 
 import Auth from './pages/Auth';
 import Chats from './pages/Chats';
+import Chat from './pages/Chat';
+
+const renderByMatch = (Component: Function, props: Object) =>
+  ({ match }) => {
+    const { params } = match;
+
+    return (<Component {...params} {...props} />);
+  };
 
 export default () => {
   const userState = useState(null);
@@ -13,6 +21,9 @@ export default () => {
       <Router>
         <Route exact path="/" render={() => <Auth userState={userState} />} />
         <Route exact path="/chats" render={() => <Chats userState={userState} />} />
+        <Route exact path="/chat/:id" render={renderByMatch(Chat, {
+          userState,
+        })} />
       </Router>
     </div>
   );

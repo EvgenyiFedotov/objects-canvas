@@ -17,7 +17,7 @@ export default (props: Props) => (
 
       result.push(
         <div key={index}>
-          <Link to={`/chats/${link}`}>{link}</Link> | {name}
+          <Link to={`/chat/${link}`}>{link}</Link> | {name}
         </div>
       );
 
