@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Redirect } from 'react-router-dom';
 import PageContent from './components/PageContent';
 import Form from './components/Form';
 import { generateKeyByPassword } from './common/crypto';
@@ -20,10 +21,16 @@ interface Props {
 
 export default (props: Props) => {
   const { userState } = props;
-  const [, setUser] = userState;
+  const [user, setUser] = userState;
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+
+  if (user !== null) {
+    return (
+      <Redirect to="/chats" />
+    );
+  }
 
   return (
     <PageContent>
