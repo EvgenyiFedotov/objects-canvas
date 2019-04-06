@@ -9,17 +9,9 @@ module.exports = webpack.buildConfig([
   ['resolve', webpack.resolve],
   ['module', webpack.module],
   {
-    entry: { main: './src/client' },
+    entry: { service: './src/client/service' },
     mode: webpack.mode(),
-    plugins: [
-      new CopyPlugin([
-        { from: './public', to: '.' },
-      ]),
-    ],
-    // devServer: {
-    //   contentBase: path.join(__dirname, '../dist/client'),
-    //   writeToDisk: true,
-    //   port: 5000,
-    // },
+    target: 'node',
+    externals: ['uws'],
   },
 ]);

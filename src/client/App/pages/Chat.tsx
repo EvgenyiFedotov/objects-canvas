@@ -1,9 +1,27 @@
 import React from 'react';
+import PageComponent from './components/PageContent';
+import Form from './components/Form';
 
-export default (props) => {
-  console.log(props);
+interface Props {
+  link: string;
+};
+
+export default (props: Props) => {
+  const { link } = props;
 
   return (
-    <div>Chat</div>
+    <PageComponent
+      justify="space-between"
+    >
+      <div className="page-chat">
+        <button>Back</button>
+        {link}
+      </div>
+
+      <Form>
+        <input />
+        <button>Send</button>
+      </Form>
+    </PageComponent>
   );
 };

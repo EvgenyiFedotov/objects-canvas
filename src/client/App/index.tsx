@@ -21,7 +21,7 @@ export default () => {
       <Router>
         <Route exact path="/" render={() => <Auth userState={userState} />} />
         <Route exact path="/chats" render={() => <Chats userState={userState} />} />
-        <Route exact path="/chat/:id" render={renderByMatch(Chat, {
+        <Route exact path="/chat/:link" render={renderByMatch(Chat, {
           userState,
         })} />
       </Router>
