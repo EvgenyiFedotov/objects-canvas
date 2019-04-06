@@ -16,10 +16,16 @@ module.exports = webpack.buildConfig([
         { from: './public', to: '.' },
       ]),
     ],
-    // devServer: {
-    //   contentBase: path.join(__dirname, '../dist/client'),
-    //   writeToDisk: true,
-    //   port: 5000,
-    // },
+    devServer: {
+      index: '', // specify to enable root proxying
+      proxy: {
+        context: () => true,
+        target: 'http://localhost:5000'
+      }
+      // host: 'localhost',
+      // port: 5000,
+      // contentBase: path.join(__dirname, '../dist/client'),
+      // writeToDisk: true,
+    },
   },
 ]);

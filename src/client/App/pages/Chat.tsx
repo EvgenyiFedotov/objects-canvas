@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PageComponent from './components/PageContent';
 import Form from './components/Form';
+import Messages from './chat/Messages';
 
 interface Props {
   link: string;
@@ -8,6 +9,8 @@ interface Props {
 
 export default (props: Props) => {
   const { link } = props;
+  const messagesState = useState([]);
+  const [messages] = messagesState;
 
   return (
     <PageComponent
@@ -17,6 +20,10 @@ export default (props: Props) => {
         <button>Back</button>
         {link}
       </div>
+
+      <Messages>
+        {messages}
+      </Messages>
 
       <Form>
         <input />
