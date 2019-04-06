@@ -1,9 +1,9 @@
-import React, { useState, SyntheticEvent } from 'react';
+import React, { useState, useEffect } from 'react';
 import PageContent from './components/PageContent';
 import Form from './components/Form';
 import List from './chats/List';
 import ChatsForm from './chats/Form';
-import { onSubmit } from './chats/common';
+import { onSubmit, getChats } from './chats/common';
 import { generateKey } from './common/crypto';
 import { tableChats } from './common/idb';
 
@@ -20,7 +20,15 @@ export default (props: Props) => {
   const { userState } = props;
   const [user] = userState;
   const chatsState = useState([]);
-  const [chats] = chatsState;
+  const [chats, setChats] = chatsState;
+
+  useEffect(() => {
+    getChats(userState)(tableChats).then((readChats) => {
+      setChats(readChats);
+    });
+
+    console.log('@didMount');
+  }, []);
 
   return (
     <PageContent
@@ -36,7 +44,10 @@ export default (props: Props) => {
 
       <Form>
         <ChatsForm
-          onSubmit={onSubmitMethods(chatsState)}
+          onSubmit={onSubmitMethods({
+            userState,
+            chatsState,
+          })}
         />
       </Form>
     </PageContent>

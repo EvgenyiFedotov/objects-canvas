@@ -1,27 +1,56 @@
 import { ListItem } from './List';
 
+interface TableChats {
+  get: Function;
+  set: Function;
+};
+
 interface MethodsOnSubmit {
   generateKey: Function;
-  tableChats: {
-    set: Function,
-  };
+  tableChats: TableChats;
+};
+
+type UserState = [string, Function];
+
+interface States {
+  userState: UserState;
+  chatsState: [ListItem[], Function];
 };
 
 export const onSubmit =
   (methods: MethodsOnSubmit) =>
-  (chatsState: [ListItem[], Function]) =>
-  (nameChatState: [string, Function]) =>
-  () => {
-    const { generateKey, tableChats } = methods;
-    const [chats, setChats] = chatsState;
-    const [name, setName] = nameChatState;
-    const link = generateKey();
-    const chat = { link, name };
+    (states: States) =>
+      (nameChatState: [string, Function]) =>
+        () => {
+          const { generateKey, tableChats } = methods;
+          const { chatsState, userState } = states;
+          const [user] = userState;
+          const [chats, setChats] = chatsState;
+          const [name, setName] = nameChatState;
+          const link = generateKey();
+          const chat = { link, name };
 
-    tableChats.set(link, chat);
+          tableChats.get(user).then((prevChats: Array<ListItem>) => {
+            let nextChats = [];
 
-    console.log(tableChats);
+            if (prevChats !== undefined) {
+              nextChats = [...prevChats];
+            }
 
-    setName('');
-    setChats([...chats, chat]);
-  };
+            nextChats.push(chat);
+
+            tableChats.set(user, nextChats).then(() => {
+              setName('');
+              setChats([...chats, chat]);
+            });
+          });
+        };
+
+export const getChats =
+  (userState: UserState) =>
+    async (tableChats: TableChats) => {
+      const [user] = userState;
+      const chats = await tableChats.get(user);
+
+      return chats || [];
+    };
