@@ -1,0 +1,32 @@
+.chat-messages-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.chat-messages {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 100%; 
+  height: 100%;
+}
+
+.chat-message-wrapper {
+  display: flex;
+  width: 100%;
+  margin-bottom: var(--space-2);
+}
+
+.chat-message-wrapper__i-author {
+  justify-content: flex-end;
+}
+
+.chat-message {
+  display: flex;
+  background-color: var(--msg-bg-color);
+  color: var(--msg-color);
+  padding: var(--space);
+  border-radius: calc(var(--space) * 0.5);
+}

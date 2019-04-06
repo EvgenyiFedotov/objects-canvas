@@ -2,13 +2,16 @@ import React, { useState } from 'react';
 import PageComponent from './components/PageContent';
 import Form from './components/Form';
 import Messages from './chat/Messages';
+import ChatForm from './chat/Form';
 
 interface Props {
   link: string;
+  userState: [string, Function];
 };
 
 export default (props: Props) => {
-  const { link } = props;
+  const { link, userState } = props;
+  const [user] = userState;
   const messagesState = useState([]);
   const [messages] = messagesState;
 
@@ -16,18 +19,20 @@ export default (props: Props) => {
     <PageComponent
       justify="space-between"
     >
-      <div className="page-chat">
+      <Form>
         <button>Back</button>
         {link}
-      </div>
+      </Form>
 
-      <Messages>
+      <Messages author={user}>
         {messages}
       </Messages>
 
       <Form>
-        <input />
-        <button>Send</button>
+        <ChatForm
+          messagesState={messagesState}
+          author={user}
+        />
       </Form>
     </PageComponent>
   );
