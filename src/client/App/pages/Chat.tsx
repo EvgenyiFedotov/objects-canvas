@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
 import PageComponent from './components/PageContent';
 import Form from './components/Form';
+import Top from './chat/Top';
 import Messages from './chat/Messages';
 import ChatForm from './chat/Form';
+import { PropsChat } from './chat/common';
 
-interface Props {
-  link: string;
-  userState: [string, Function];
-};
-
-export default (props: Props) => {
-  const { link, userState } = props;
+export default (props: PropsChat) => {
+  const { userState } = props;
   const [user] = userState;
   const messagesState = useState([]);
   const [messages] = messagesState;
@@ -20,8 +17,7 @@ export default (props: Props) => {
       justify="space-between"
     >
       <Form>
-        <button>Back</button>
-        {link}
+        <Top {...props} />
       </Form>
 
       <Messages author={user}>
