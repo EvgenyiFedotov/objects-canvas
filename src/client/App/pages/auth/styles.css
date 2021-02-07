@@ -1,0 +1,4 @@
+.page-auth__error {
+  color: var(--err-color);
+  text-align: center;
+}
